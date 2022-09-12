@@ -8,7 +8,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -21,8 +21,16 @@
 } */
 
 .grid {
+  /* padding: 5rem; */
+  width: 50%;
+  height: 500px;
+  /* height: 100vh; */
+  /* position: relative; */
+  text-align: center;
+  /* color: white; */
+  background-image: url('../src/assets/bg-grid.png');
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 100%;
 }
 
 .footer {
@@ -32,6 +40,17 @@
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .footer a {

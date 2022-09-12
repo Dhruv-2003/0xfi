@@ -17,8 +17,9 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.grid}>
-        <Image src={bg}/>
-
+          {/* <Image src={bg} /> */}
+          <h1 className={styles.centereda}>CreatorFi</h1>
+          <h3 className={styles.censtereda}>A DeSo platform with DeFi tools for creators</h3>
         </div>
       </main>
     </div>
