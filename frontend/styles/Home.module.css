@@ -4,23 +4,53 @@
 
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
+  padding: 2rem 0;
+  /* flex: 1; */
+  /* flex-direction: column; */
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
   /* background-image: url('../src/assets/bg-grid.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain; */
 }
 
+.left {
+  /* background-color: rgb(18, 45, 73); */
+
+  /* height: 90vh; */
+  /* width: 70%;
+  height: 500px; */
+  padding: 1.2rem 2.5rem;
+}
+
+.right {
+  /* height: 90vh; */
+  /* background-color: #080426;
+  background-color: rgb(149, 202, 255);
+  color: #2a3031; */
+  /* width: 50%; */
+  /* width: 30%; */
+  /* height: 500px; */
+  padding: 1.2rem 2.5rem;
+}
+
 .hero {
   text-align: center;
 }
 
+@media screen and ( max-width: 768px ) {
+  .main {
 
+  }
+
+  .left, .right {
+    width: 100%;
+  }
+
+}
 
 /* 
 @media (prefers-color-scheme: dark) {
