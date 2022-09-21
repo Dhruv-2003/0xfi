@@ -1,6 +1,7 @@
 import Layout from "../src/components/Layout";
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -25,18 +26,6 @@ const wagmiClient = createClient({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
-    <Head>
-        <title>Artist3</title>
-        <meta
-          name="description"
-          content="Mint NFT as a proof for your digital artwork in simple steps and
-              sell it in form of fractions directly on the platform to earn from
-              it. Token Holders earn a profit by holding the tokens for a peroid
-              of time"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Layout>
@@ -44,7 +33,6 @@ function MyApp({ Component, pageProps }) {
         </Layout>
       </RainbowKitProvider>
     </WagmiConfig>
-    </>
   );
 }
 
