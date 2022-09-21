@@ -1,19 +1,35 @@
 .navbar {
-    max-height: 8vh;
-    padding: .5rem 2rem;
+    /* max-height: 8vh; */
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #97c0f3;
     background-color: #030a14;
+    background-color: inherit;
+    /* position: fixed;
+    width: 100%; */
+    /* border-bottom: 1px solid #97c0f3; */
 }
+
+.navmenu {
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 
 .navlink {
     margin: 0px 15px;
+    font-size: 1.1rem;
 }
 
 .logo {
+    margin: 0;
+    cursor: pointer;
     max-width: 220px;
     padding: .2rem .6rem;
-    margin: 0;
 }
+
+
