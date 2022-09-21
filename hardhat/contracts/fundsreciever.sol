@@ -13,8 +13,8 @@ contract fundsReciever is Ownable {
     mapping(address => uint256) public balances;
     mapping(address => uint256) public investedBalance;
 
-    address controller;
-    address investor;
+    address private controller;
+    address private investor;
     bool paused;
 
     event recieved(address indexed sender, uint256 amount);
@@ -55,6 +55,7 @@ contract fundsReciever is Ownable {
     }
 
     /// to withdraw the amount they have kept in the contract ,withdraw in full
+    /// we need to fetch the reciever verified address too
     function withdrawUser(uint256 amount)
         public
         onlyUser
