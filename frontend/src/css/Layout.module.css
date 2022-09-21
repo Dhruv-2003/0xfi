@@ -1,11 +1,19 @@
 .navbar {
-    padding: 0 2rem;
+    max-height: 8vh;
+    padding: .5rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #97c0f3;
+    background-color: #030a14;
 }
 
 .navlink {
     margin: 0px 15px;
+}
+
+.logo {
+    max-width: 220px;
+    padding: .2rem .6rem;
+    margin: 0;
 }
