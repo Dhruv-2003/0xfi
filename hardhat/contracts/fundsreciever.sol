@@ -5,3 +5,4 @@ pragma solidity ^0.8.10;
 /// just keeps check of the balance of the creators
 /// creators can just withdraw for the balance they have , or other master contract can maybe control to the flow of the money
 /// the master contract can manage the money into the system
+/// pause the withdrawls , only called by the owner
