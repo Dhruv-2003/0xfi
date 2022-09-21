@@ -98,6 +98,7 @@ contract paymentRequests is Ownable {
         (bool success, ) = _fundsReciever.call{value: msg.value}("");
         require(success, "Payment not completed");
         _request.paid = sucess;
+        emit RequestPaidFull(_creator, msg.sender, _id, msg.value);
     }
 
     ///@dev - pay with streaming
@@ -117,10 +118,7 @@ contract paymentRequests is Ownable {
         );
         require(!_request.paid, "Already Paid");
 
-        // require(msg.value == _request.amount, "Incorrect amount");
-
-        // (bool success, ) = _fundsReciever.call{value: msg.value}("");
-        // require(success, "Payment not completed");
-        // _request.paid = sucess;
+        /// try to check if the total amount is paid , need to check the amount paid in the flow with a method
+        /// Superfluid SDK is used for creating the flow
     }
 }

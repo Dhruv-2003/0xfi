@@ -6,3 +6,18 @@ pragma solidity ^0.8.10;
 /// creators can just withdraw for the balance they have , or other master contract can maybe control to the flow of the money
 /// the master contract can manage the money into the system
 /// pause the withdrawls , only called by the owner
+
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract fundsReciever is Ownable {
+    event recieved(address indexed sender, uint256 amount);
+
+    /// @dev Function to receive Ether. msg.data must be empty
+    receive() external payable {
+        contributors[msg.sender] = true;
+        emit received(msg.sender, msg.value);
+    }
+
+    /// @dev Fallback function is called when msg.data is not empty
+    fallback() external payable {}
+}
