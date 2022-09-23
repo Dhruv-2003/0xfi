@@ -9,6 +9,12 @@ import {CFAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/app
 
 error Unauthorized();
 
+/// stream some amount to the user from the other contract
+/// stream amount from the user to the contract to recieve the funds
+/// convert the natvie token to wrapped , then stream and then unwrap at the recievers end
+/// give option to wrap in the frontend
+/// give option to unwrap in the frontend
+
 contract Stream {
     // ---------------------------------------------------------------------------------------------
     // STATE VARIABLES
