@@ -9,7 +9,17 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+interface profile {
+    function getReciever(address _user) external view returns (address);
+
+    function checkUser(addrss _user) external view returns (bool);
+}
+
+interface invest {}
+
 contract fundsReciever is Ownable {
+    profile _profile;
+
     mapping(address => uint256) public balances;
     mapping(address => uint256) public investedBalance;
 
@@ -21,7 +31,10 @@ contract fundsReciever is Ownable {
     event withdrawl(address user, uint256 amount);
     event invested(address user, uint256 amount);
 
-    constructor() {}
+    constructor(address _profileManager) {
+        require(_profileManager != address(0), "Not a Valid address");
+        _profile = profile(_profileManager);
+    }
 
     modifier onlyWhenNotPaused() {
         require(!paused, "Contract is currently paused");
@@ -29,7 +42,7 @@ contract fundsReciever is Ownable {
     }
 
     modifier onlyUser() {
-        require(balances[msg.sender] > 0, "No Balance");
+        require(_profile.checkUser(msg.sender), "Not a User , Register first ");
         _;
     }
 
@@ -37,6 +50,7 @@ contract fundsReciever is Ownable {
         require(msg.sender == controller, "Not the controller");
         _;
     }
+
     modifier onlyInvestor() {
         require(msg.sender == investor, "Not the investor");
         _;
@@ -64,7 +78,8 @@ contract fundsReciever is Ownable {
     {
         require(amount != 0, "Not a valid amount");
         balances[msg.sender] -= amount;
-        (bool success, ) = msg.sender.call{value: amount}("");
+        address reciever = _profile.getReciever(msg.sender);
+        (bool success, ) = reciever.call{value: amount}("");
         require(success, "Payment not completed");
         emit withdrawl(msg.sender, amount);
         return _success;

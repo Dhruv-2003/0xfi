@@ -9,9 +9,13 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-interface fundsReciever {}
+interface fundsReciever {
+    function addBalance(address user, uint256 amount) external;
+}
 
 contract paymentRequests is Ownable {
+    fundsReciever _reciever;
+
     struct PaymentRequest {
         uint256 amount;
         uint256 deadline; /// time period after which links expires
@@ -36,6 +40,8 @@ contract paymentRequests is Ownable {
         string detailsURI
     );
 
+    event userPaid(address user, address payee, uint256 amount);
+
     // events for request paid to index with graph
     event RequestPaidFull(
         address payee,
@@ -44,9 +50,10 @@ contract paymentRequests is Ownable {
         uint256 amount
     );
 
-    constructor(address _reciever) {
+    constructor(address _recieverAddress) {
         require(_reciever != address(0), "Not a valid address");
-        _fundsReciever = _reciever;
+        _fundsReciever = _recieverAddress;
+        _reciever = fundsReciever(_recieverAddress);
     }
 
     ///@dev - create a payment request
@@ -98,6 +105,7 @@ contract paymentRequests is Ownable {
         (bool success, ) = _fundsReciever.call{value: msg.value}("");
         require(success, "Payment not completed");
         _request.paid = sucess;
+        _reciever.addBalance(_creator, msg.value);
         emit RequestPaidFull(_creator, msg.sender, _id, msg.value);
     }
 
@@ -120,5 +128,15 @@ contract paymentRequests is Ownable {
 
         /// try to check if the total amount is paid , need to check the amount paid in the flow with a method
         /// Superfluid SDK is used for creating the flow
+    }
+
+    ///pay to the user with unique link send it directly to the funds contract
+    /// never expired link to accept payment , donations
+    function pay(address user) public payable {
+        require(msg.value > 0, "Amount can not be 0");
+        (bool success, ) = _fundsReciever.call{value: msg.value}("");
+        require(success, "Payment not completed");
+        _reciever.addBalance(user, msg.value);
+        emit userPaid(user, msg.sender, msg.value);
     }
 }
