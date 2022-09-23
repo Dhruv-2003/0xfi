@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { Framework } from "@superfluid-finance/sdk-core";
 import { ethers } from "ethers";
-import { useSigner } from "wagmi";
-export const url = process.env.ALCHEMY_API;
-export const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+import { useSigner, useProvider } from "wagmi";
+
+const provider = useProvider();
+const { data: signer } = useSigner();
+
+const sf = await Framework.create({
+  chainId: 80001,
+  provider: provider,
+});
 
 /// create flow component
 async function createNewFlow(recipient, flowRate) {
-  const sf = await Framework.create({
-    chainId: 80001,
-    provider: customHttpProvider,
-  });
-
-  const { data: signer } = useSigner();
-
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -48,6 +47,70 @@ async function createNewFlow(recipient, flowRate) {
   }
 }
 
+async function updateExistingFlow(recipient, flowRate) {
+  const DAIxContract = await sf.loadSuperToken("fDAIx");
+  const DAIx = DAIxContract.address;
+
+  try {
+    const updateFlowOperation = sf.cfaV1.updateFlow({
+      flowRate: flowRate,
+      receiver: recipient,
+      superToken: DAIx,
+      // userData?: string
+    });
+
+    console.log("Updating your stream...");
+
+    const result = await updateFlowOperation.exec(signer);
+    console.log(result);
+
+    console.log(
+      `Congrats - you've just updated a money stream!
+      View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
+      Network: Goerli
+      Super Token: DAIx
+      Sender: 0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721
+      Receiver: ${recipient},
+      New FlowRate: ${flowRate}
+      `
+    );
+  } catch (error) {
+    console.log(
+      "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
+    );
+    console.error(error);
+  }
+}
+
+async function deleteFlow(recipient) {
+  const DAIxContract = await sf.loadSuperToken("fDAIx");
+  const DAIx = DAIxContract.address;
+
+  try {
+    const deleteFlowOperation = sf.cfaV1.deleteFlow({
+      sender: "0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721",
+      receiver: recipient,
+      superToken: DAIx,
+      // userData?: string
+    });
+
+    console.log("Deleting your stream...");
+
+    await deleteFlowOperation.exec(signer);
+
+    console.log(
+      `Congrats - you've just deleted your money stream!
+         Network: Kovan
+         Super Token: DAIx
+         Sender: 0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721
+         Receiver: ${recipient}
+      `
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const CreateFlow = () => {
   const [recipient, setRecipient] = useState("");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
@@ -68,14 +131,6 @@ export const CreateFlow = () => {
       return calculatedFlowRate;
     }
   }
-  const handleFlowRateChange = (e) => {
-    setFlowRate(() => ([e.target.name] = e.target.value));
-    // if (typeof Number(flowRate) === "number") {
-    let newFlowRateDisplay = calculateFlowRate(e.target.value);
-    setFlowRateDisplay(newFlowRateDisplay.toString());
-    // setFlowRateDisplay(() => calculateFlowRate(e.target.value));
-    // }
-  };
 
   return (
     <div>
