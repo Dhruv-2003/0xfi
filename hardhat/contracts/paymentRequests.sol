@@ -14,7 +14,7 @@ interface fundsReciever {
 }
 
 contract paymentRequests is Ownable {
-    fundsReciever _reciever;
+    fundsReciever _reciever = fundsReciever(_fundsReciever);
 
     struct PaymentRequest {
         uint256 amount;
@@ -53,7 +53,6 @@ contract paymentRequests is Ownable {
     constructor(address _recieverAddress) {
         require(_recieverAddress != address(0), "Not a valid address");
         _fundsReciever = _recieverAddress;
-        _reciever = fundsReciever(_recieverAddress);
     }
 
     ///@dev - create a payment request
@@ -138,5 +137,10 @@ contract paymentRequests is Ownable {
         require(success, "Payment not completed");
         _reciever.addBalance(user, msg.value);
         emit userPaid(user, msg.sender, msg.value);
+    }
+
+    function setFunds(address _fundsContract) public onlyOwner {
+        require(_fundsContract != addres(0), "not a valid address");
+        _fundsReciever = _fundsContract;
     }
 }
