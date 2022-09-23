@@ -11,8 +11,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 interface fundsReciever {}
 
-contract paymentProfile {
-    struct User {
+contract paymentProfile is Ownable {
+    struct UserProfile {
         address reciever;
         string name;
         bool verified;
@@ -22,7 +22,7 @@ contract paymentProfile {
 
     /// might be add the record of the payment recieved for the user
 
-    mapping(address => User) public users;
+    mapping(address => UserProfile) public users;
 
     event userCreated(address user, string name);
 
@@ -36,9 +36,9 @@ contract paymentProfile {
     }
 
     /// register as a user on the portal
-    function register(address reciever, string name) public {
+    function register(address reciever, string memory name) public {
         require(reciever != address(0), "not a valid address");
-        users[msg.sender] == User(reciever, name, false, 0, true);
+        users[msg.sender] = UserProfile(reciever, name, false, 0, true);
     }
 
     ///to set the reciever address
@@ -61,7 +61,7 @@ contract paymentProfile {
             users[msg.sender].requested <= 2,
             "You can just try to verify only twice"
         );
-        users[msg.sender].receiever = user;
+        users[msg.sender].reciever = user;
         uint256 amount = 0.005 ether;
         (bool success, ) = user.call{value: amount}("");
         require(success, "Payment not completed");
@@ -72,11 +72,11 @@ contract paymentProfile {
     function confirm(address user, bool _verified) public onlyUser {
         require(users[msg.sender].verified, "You are already verified");
         users[msg.sender].verified = _verified;
-        users[msg.sender].receiever = user;
+        users[msg.sender].reciever = user;
     }
 
     ///get the details of user
-    function getUser(address _user) public view returns (User memory) {
+    function getUser(address _user) public view returns (UserProfile memory) {
         return users[_user];
     }
 
@@ -84,12 +84,12 @@ contract paymentProfile {
         return users[_user].reciever;
     }
 
-    function checkUser(addrss _user) public view returns (bool) {
+    function checkUser(address _user) public view returns (bool) {
         return users[_user].user;
     }
 
     /// In case a user is supected, Owner could stop the withdrawl
     function suspectUser(address _user) public onlyOwner {
-        users[msg.sender].verified = false;
+        users[_user].verified = false;
     }
 }

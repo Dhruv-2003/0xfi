@@ -51,7 +51,7 @@ contract paymentRequests is Ownable {
     );
 
     constructor(address _recieverAddress) {
-        require(_reciever != address(0), "Not a valid address");
+        require(_recieverAddress != address(0), "Not a valid address");
         _fundsReciever = _recieverAddress;
         _reciever = fundsReciever(_recieverAddress);
     }
@@ -104,7 +104,7 @@ contract paymentRequests is Ownable {
 
         (bool success, ) = _fundsReciever.call{value: msg.value}("");
         require(success, "Payment not completed");
-        _request.paid = sucess;
+        _request.paid = success;
         _reciever.addBalance(_creator, msg.value);
         emit RequestPaidFull(_creator, msg.sender, _id, msg.value);
     }

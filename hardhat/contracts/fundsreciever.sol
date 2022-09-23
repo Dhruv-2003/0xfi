@@ -12,10 +12,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 interface profile {
     function getReciever(address _user) external view returns (address);
 
-    function checkUser(addrss _user) external view returns (bool);
+    function checkUser(address _user) external view returns (bool);
 }
 
-interface invest {}
+interface investContract {}
 
 contract fundsReciever is Ownable {
     profile _profile;
@@ -99,13 +99,12 @@ contract fundsReciever is Ownable {
         uint256 _amount,
         address receiver
     ) public onlyInvestor onlyWhenNotPaused {
-        require(amount != 0, "Not a valid amount");
+        require(_amount != 0, "Not a valid amount");
         balances[msg.sender] -= _amount;
-        investedBalance[msg.sender] += amount;
+        investedBalance[msg.sender] += _amount;
         (bool success, ) = receiver.call{value: _amount}("");
         require(success, "Payment not completed");
         emit invested(user, _amount);
-        return _success;
     }
 
     /// set the controller of the some restricted functions
@@ -116,7 +115,7 @@ contract fundsReciever is Ownable {
 
     /// set the investor who can withdraw some money as an when approved by the user
     function setInvestor(address _investor) public onlyOwner {
-        require(_controller != address(0), "not a valid contract address");
+        require(_investor != address(0), "not a valid contract address");
         investor = _investor;
     }
 
@@ -130,9 +129,7 @@ contract fundsReciever is Ownable {
     }
 
     /// @dev Function to receive Ether. msg.data must be empty
-    receive() external payable {
-        emit received(msg.sender, msg.value);
-    }
+    receive() external payable {}
 
     /// @dev Fallback function is called when msg.data is not empty
     fallback() external payable {}
