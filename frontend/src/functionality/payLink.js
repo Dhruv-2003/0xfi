@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useContract, userSigner, useProvider, useAccount } from "wagmi";
 import { StoreRequests } from "./StoreRequests";
-import { Requests_Contract_address, Request_ABI } from "../constants";
+import {
+  Requests_Contract_address,
+  Request_ABI,
+  Profile_ABI,
+  Profile_Contract_address,
+} from "../constants";
 import { ethers } from "ethers";
+
+/// personalized page
 export default function payLink() {
-  const [name, setName] = useState("");
-  const [note, setNote] = useState("");
   const [amount, setAmount] = useState("");
-  const [deadline, setDeadline] = useState(0);
-  const [detailsURI, setDetailsURI] = useState("");
+  const [userAddress, setUserAddress] = useState("");
+  const [details, setdetails] = useState({});
+
+  const router = useRouter();
+  const _address = router.query.address;
 
   const provider = useProvider();
   const { data: signer } = useSigner();
@@ -19,36 +27,34 @@ export default function payLink() {
     signerOrProvider: signer || provider,
   });
 
-  const handleCreate = async () => {
+  const Profile_contract = useContract({
+    addressOrName: Profile_Contract_address,
+    contractInterface: Profile_ABI,
+    signerOrProvider: signer || provider,
+  });
+
+  useEffect(() => {
+    setUserAddress(_address);
+    fetchDetails(_address);
+  }, [_address]);
+
+  const fetchDetails = async (_userAddress) => {
     try {
-      await storeDetails();
+      const response = await Profile_contract.getUser(_userAddress);
+      console.log(response);
+      setdetails(response);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const storeDetails = async () => {
+  const pay = async () => {
     try {
-      console.log("Storing the info");
-      const cid = await StoreRequests(name, note, amount);
-      const URL = `https://ipfs.io/ipfs/${cid}`;
-      console.log(URL);
-      setDetailsURI(URL);
-      createRequest(URL);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const createRequest = async (_detailsURL) => {
-    try {
+      /// sending the money in to the user
       const calculateAmount = ethers.utils.parseEther(amount);
-      const tx = await Request_contract.createRequest(
-        calculateAmount,
-        deadline,
-        _detailsURL,
-        { value: calculateAmount }
-      );
+      const tx = await Request_contract.createRequest(calculateAmount, {
+        value: calculateAmount,
+      });
       await tx.wait();
     } catch (err) {
       console.log(err);
