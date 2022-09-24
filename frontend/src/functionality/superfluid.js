@@ -111,72 +111,79 @@ async function deleteFlow(recipient) {
   }
 }
 
-export const CreateFlow = () => {
-  const [recipient, setRecipient] = useState("");
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const [flowRate, setFlowRate] = useState("");
-  const [flowRateDisplay, setFlowRateDisplay] = useState("");
-
-  function calculateFlowRate(amount) {
-    if (typeof Number(amount) !== "number" || isNaN(Number(amount)) === true) {
-      alert("You can only calculate a flowRate based on a number");
-      return;
-    } else if (typeof Number(amount) === "number") {
-      if (Number(amount) === 0) {
-        return 0;
-      }
-      const amountInWei = ethers.BigNumber.from(amount);
-      const monthlyAmount = ethers.utils.formatEther(amountInWei.toString());
-      const calculatedFlowRate = monthlyAmount * 3600 * 24 * 30;
-      return calculatedFlowRate;
-    }
-  }
-
-  return (
-    <div>
-      <h2>Create a Flow</h2>
-      <Form>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="recipient"
-            value={recipient}
-            onChange={handleRecipientChange}
-            placeholder="Enter your Ethereum address"
-          ></FormControl>
-        </FormGroup>
-        <FormGroup className="mb-3">
-          <FormControl
-            name="flowRate"
-            value={flowRate}
-            onChange={handleFlowRateChange}
-            placeholder="Enter a flowRate in wei/second"
-          ></FormControl>
-        </FormGroup>
-        <CreateButton
-          onClick={() => {
-            setIsButtonLoading(true);
-            createNewFlow(recipient, flowRate);
-            setTimeout(() => {
-              setIsButtonLoading(false);
-            }, 1000);
-          }}
-        >
-          Click to Create Your Stream
-        </CreateButton>
-      </Form>
-
-      <div className="description">
-        <p>
-          Go to the CreateFlow.js component and look at the <b>CreateFlow() </b>
-          function to see under the hood
-        </p>
-        <div className="calculation">
-          <p>Your flow will be equal to:</p>
-          <p>
-            <b>${flowRateDisplay !== " " ? flowRateDisplay : 0}</b> DAIx/month
-          </p>
-        </div>
-      </div>
-    </div>
+async function daiApprove(amt) {
+  //fDAI on goerli: you can find network addresses here: https://docs.superfluid.finance/superfluid/developers/networks
+  //note that this abi is the one found here: https://goerli.etherscan.io/address/0x88271d333C72e51516B67f5567c728E702b3eeE8
+  const DAI = new ethers.Contract(
+    "0x88271d333C72e51516B67f5567c728E702b3eeE8",
+    daiABI,
+    signer
   );
-};
+  try {
+    console.log("approving DAI spend");
+    await DAI.approve(
+      "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00",
+      ethers.utils.parseEther(amt.toString())
+    ).then(function (tx) {
+      console.log(
+        `Congrats, you just approved your DAI spend. You can see this tx at https://kovan.etherscan.io/tx/${tx.hash}`
+      );
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+//where the Superfluid logic takes place
+async function daiUpgrade(amt) {
+  const DAIx = await sf.loadSuperToken("fDAIx");
+
+  try {
+    console.log(`upgrading $${amt} DAI to DAIx`);
+    const amtToUpgrade = ethers.utils.parseEther(amt.toString());
+    const upgradeOperation = DAIx.upgrade({
+      amount: amtToUpgrade.toString(),
+    });
+    const upgradeTxn = await upgradeOperation.exec(signer);
+    await upgradeTxn.wait().then(function (tx) {
+      console.log(
+        `
+        Congrats - you've just upgraded DAI to DAIx!
+      `
+      );
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function daiDowngrade(amt) {
+  const DAIx = await sf.loadSuperToken(
+    "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00"
+  );
+
+  console.log(DAIx.address);
+
+  try {
+    console.log(`Downgrading $${amt} fDAIx...`);
+    const amtToDowngrade = ethers.utils.parseEther(amt.toString());
+    const downgradeOperation = DAIx.downgrade({
+      amount: amtToDowngrade.toString(),
+    });
+    const downgradeTxn = await downgradeOperation.exec(signer);
+    await downgradeTxn.wait().then(function (tx) {
+      console.log(
+        `
+        Congrats - you've just downgraded DAIx to DAI!
+        You can see this tx at https://goerli.etherscan.io/tx/${tx.transactionHash}
+        Network: Goerli
+        NOTE: you downgraded the dai of 0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721.
+        You can use this code to allow your users to do it in your project.
+        Or you can downgrade tokens at app.superfluid.finance/dashboard.
+      `
+      );
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
