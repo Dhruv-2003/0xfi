@@ -9,6 +9,8 @@
     "hardhat": "^2.10.1"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.8.0-rc.1",
+    "@superfluid-finance/ethereum-contracts": "^1.4.1",
     "@thirdweb-dev/contracts": "^3"
   }
 }
