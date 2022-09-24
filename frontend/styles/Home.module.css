@@ -18,25 +18,24 @@
 
 .hero {
   width: 100%;
-display: flex;
-justify-content: space-around;
-align-items: center;
-flex-wrap: wrap; 
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .image {
   max-width: 850px;
 }
 
-@media screen and ( max-width: 768px ) {
+@media screen and (max-width: 768px) {
   .main {
-
   }
 
-  .left, .right {
+  .left,
+  .right {
     width: 100%;
   }
-
 }
 
 /* 
