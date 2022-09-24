@@ -32,6 +32,9 @@ export default function Layout({ children }) {
             <Link href="/dashboard">Dashboard</Link>
           </li>
           <li className={styles.navlink}>
+            <Link href="/receive">Receive</Link>
+          </li>
+          <li className={styles.navlink}>
             <Link href="/dashboard">Invest</Link>
           </li>
           <li className={`${styles.navlink} ${styles.connect} ${styles.hide}`}>
