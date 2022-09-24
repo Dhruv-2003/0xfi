@@ -77,7 +77,8 @@
   box-shadow: #7a90b7 0px 1px 3px 0px, #b3cbe5 0px 1px 2px 0px;
 }
 
-.pay h1, .pay h4 {
+.pay h1,
+.pay h4 {
   margin: 0;
 }
 
@@ -87,8 +88,17 @@
 
 .button {
   /* width: 50%; */
-  margin: 15px auto;
+  margin: 15px;
   margin-bottom: 5px;
+  width: 25%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  /* width: 100%; */
 }
 
 .banner {
@@ -96,8 +106,15 @@
 }
 
 @media screen and (max-width: 768px) {
-  .main {
+  .button {
+    width: 100%;
   }
 
-}
+  .pay {
+    padding: 1rem;
+  }
 
+  .pay_content {
+    padding: 0.5rem 0;
+  }
+}

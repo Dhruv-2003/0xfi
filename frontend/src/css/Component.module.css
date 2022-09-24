@@ -10,7 +10,10 @@
   border: 1px solid #adbce3;
   border-radius: 8px;
   background-color: #dee6f7;
+  background-color: inherit;
   color: #16191c;
+  color: #dbeaf7;
+
   box-shadow: #7a90b7 0px 1px 3px 0px, #b3cbe5 0px 1px 2px 0px;
 }
 

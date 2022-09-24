@@ -43,11 +43,25 @@ export default function Pay(props) {
             12/12/2025
             {props.expiry}
           </h3>
-          <div className={styles.button}>
-            <Button
-              title={"Pay "}
-              //   click={function here}
-            />
+          <div className={styles.buttons}>
+            <div className={styles.button}>
+              <Button
+                title={"Pay Now"}
+                //   click={function here}
+              />
+            </div>
+            <div className={styles.button}>
+              <Button
+                title={"Pay Later"}
+                //   click={function here}
+              />
+            </div>
+            <div className={styles.button}>
+              <Button
+                title={"Pay in Stream"}
+                //   click={function here}
+              />
+            </div>
           </div>
         </div>
       </div>
