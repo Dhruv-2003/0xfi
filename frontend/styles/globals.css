@@ -14,9 +14,11 @@ body {
   margin: 0;
   color: #b9cbe1;
   color: #eeeeee;
+  /* color: #161a1a; */
   background-color: #07041b;
   background-color: #040305;
   background-color: #030a14;
+  /* background-color: #e6f5f7; */
   font-family: "Lato", sans-serif;
 }
 
