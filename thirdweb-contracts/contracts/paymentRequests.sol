@@ -166,4 +166,12 @@ contract paymentRequests is Ownable {
         require(streamAddress != address(0), "Not a valid Address");
         _streamAddress = streamAddress;
     }
+
+    function fetchRequest(address creator, uint256 _id)
+        public
+        view
+        returns (PaymentRequest memory)
+    {
+        return requests[creator][_id];
+    }
 }
