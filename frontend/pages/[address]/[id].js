@@ -48,10 +48,26 @@ export default function PayRequest(props) {
 
   const handlePayFull = async () => {
     try {
+      console.log("Paying the user ...");
+
       const amount = details.amount;
       const tx = await Request_contract.PayinFull(userAddress, requestId, {
         value: amount,
       });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePayinStream = async () => {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePayLater = async () => {
+    try {
     } catch (err) {
       console.log(err);
     }

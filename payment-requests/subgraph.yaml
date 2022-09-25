@@ -6,9 +6,9 @@ dataSources:
     name: paymentRequests
     network: mumbai
     source:
-      address: "0x35cfFB7D5F46Bbb8b8747d761092001f78dDad23"
+      address: "0x8f448eDb6ef6B3DA657e267eFd68791808BC7E41"
       abi: paymentRequests
-      startBlock: 28274883
+      startBlock: 28285488
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
