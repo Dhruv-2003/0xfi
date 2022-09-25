@@ -54,6 +54,7 @@ export default function Generate() {
   const createRequest = async (_detailsURL) => {
     try {
       const deadline = Date.parse(expiry);
+      console.log(deadline);
       const calculateAmount = ethers.utils.parseEther(amount);
       const tx = await Request_contract.createRequest(
         calculateAmount,
@@ -63,7 +64,7 @@ export default function Generate() {
       await tx.wait();
       const id = parseInt(tx.value._hex);
       setRequestId(id);
-      // console.log(parseInt(tx.value._hex));
+      console.log(parseInt(tx.value._hex));
       console.log("request created");
 
       setGeneratedLink(`https://0xfi.vercel.app/${address}/${id}`);

@@ -1,15 +1,18 @@
 export const Requests_Contract_address =
-  "0x35cfFB7D5F46Bbb8b8747d761092001f78dDad23";
+  "0x8f448eDb6ef6B3DA657e267eFd68791808BC7E41";
 
 export const Funds_Contract_address =
   "0x16F07eaEb2A20D235A86e0b227f232d5AD8B529D";
 
 export const Profile_Contract_address =
   "0xFd862D502b2029B0e0F32633EA72EC8917D658d7";
+
 export const WEB3STORAGE_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDMxQjM3MjRlN2E2RjgyMTg3NEFEYzMyYjEzZDQwNjM2YkFiMDA0NzEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTg0MTc0ODY2ODksIm5hbWUiOiJDYXplIn0.BoGp0mNQc_syBHBZFj6Mb2dTUjAlpLWHd6DwCwFSc_4";
 export const NFT_STORAGE_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVERWJCMEZCNTk3REI4MTUxNkU5M2Y4YmM3RjJmQ0Q2ODYzNDAyOEUiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1NjU3MTMwMzkzMCwibmFtZSI6Im1pbnQifQ.tsBchH1uaXC6DKp5g5nL16mjT0rWsBFhi-mKp3x72WQ";
+
+export const NFTPORT_API_KEY = "4c700476-ff0d-48b5-92bc-bc39436203f3";
 
 export const Request_ABI = [
   {
@@ -221,6 +224,57 @@ export const Request_ABI = [
       },
     ],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "creator",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+    ],
+    name: "fetchRequest",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "deadline",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "detailsURI",
+            type: "string",
+          },
+          {
+            internalType: "bool",
+            name: "paid",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "stream",
+            type: "bool",
+          },
+        ],
+        internalType: "struct paymentRequests.PaymentRequest",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

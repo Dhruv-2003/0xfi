@@ -108,7 +108,7 @@ contract paymentRequests is Ownable {
         PaymentRequest memory _request = requests[_creator][_id];
 
         require(
-            _request.deadline < block.timestamp,
+            _request.deadline > block.timestamp,
             "Deadline Passed , link expired"
         );
         require(!_request.paid, "Already Paid");

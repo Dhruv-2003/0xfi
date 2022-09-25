@@ -5,8 +5,8 @@ import ReceivedPaymets from "../src/components/ReceivedPaymets";
 import styles from "../styles/Home.module.css";
 
 export default function dashboard(props) {
-  const [name, setName] = useState('')
-  const [walletAddress, setWalletAddress] = useState('')
+  const [name, setName] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
   return (
     <div className={styles.page}>
       <h1 className={styles.heading}>Welcome to Dashboard</h1>
@@ -15,13 +15,23 @@ export default function dashboard(props) {
           <h2>User Stats</h2>
           <div className={styles.balance}>
             <h4>Enter Name: </h4>
-            <input onChange={e => {
-              setName(e.target.value)
-            }} type="text" className={styles.input} placeholder="Enter Name" />
+            <input
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+              className={styles.input}
+              placeholder="Enter Name"
+            />
             <h4>Enter Wallet Address: </h4>
-            <input onChange={e => {
-              setWalletAddress(e.target.value)
-            }} type="text" className={styles.input} placeholder="Wallet Address" />
+            <input
+              onChange={(e) => {
+                setWalletAddress(e.target.value);
+              }}
+              type="text"
+              className={styles.input}
+              placeholder="Wallet Address"
+            />
 
             <Button title="Register" />
             {/* <h1>Kushagra Sarathe</h1>

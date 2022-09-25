@@ -1,8 +1,8 @@
 import axios from "axios";
 // import { useState } from "react";
-import { NFTPORT_API_KEY } from "../../constants";
+import { NFTPORT_API_KEY } from "../constants";
 // const nftport_key = process.env.NFTPORT_API_KEY ;
-export const MintNFT = async (ipfsURI, userAddress) => {
+export const MintBill = async (ipfsURI, userAddress) => {
   console.log(ipfsURI, userAddress);
   const options = {
     method: "POST",
@@ -13,7 +13,7 @@ export const MintNFT = async (ipfsURI, userAddress) => {
     },
     data: {
       chain: "polygon",
-      contract_address: "0xDBd95D79d3A019Cd16D02B6a386aDa8C717C6A09",
+      contract_address: "",
       metadata_uri: ipfsURI,
       mint_to_address: userAddress,
     },
