@@ -1,9 +1,10 @@
-type ListingEntity @entity {
+type RequestEntity @entity {
   id: ID!
   amount: BigInt!
   payeeAddress: Bytes!
-  payerAddress: Bytes!
+  payerAddress: Bytes
   requestId: BigInt!
   deadline: BigInt!
   detailsURI: String!
+  paid: Boolean
 }
