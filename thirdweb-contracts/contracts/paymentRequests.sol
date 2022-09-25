@@ -146,12 +146,12 @@ contract paymentRequests is Ownable {
         _reciever.addBalance(_creator, _request.amount);
     }
 
-    ///pay to the user with unique link send it directly to the funds contract
+    /// pay to the user with unique link send it directly to the funds contract
     /// never expired link to accept payment , donations
     function pay(address user) public payable {
         require(msg.value > 0, "Amount can not be 0");
-        (bool success, ) = _fundsReciever.call{value: msg.value}("");
-        require(success, "Payment not completed");
+        // (bool success, ) = _fundsReciever.call{value: msg.value}("");
+        // require(success, "Payment not completed");
         _reciever.addBalance(user, msg.value);
         emit userPaid(user, msg.sender, msg.value);
     }

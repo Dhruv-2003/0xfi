@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useContract, useSigner, useProvider, useAccount } from "wagmi";
-import { StoreRequests } from "./StoreRequests";
+import { StoreRequests } from "../StoreRequests";
 import {
   Requests_Contract_address,
   Request_ABI,

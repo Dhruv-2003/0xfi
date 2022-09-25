@@ -12,7 +12,7 @@ const sf = await Framework.create({
 });
 
 /// create flow component
-async function createNewFlow(recipient, flowRate) {
+export async function createNewFlow(recipient, flowRate) {
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -47,7 +47,7 @@ async function createNewFlow(recipient, flowRate) {
   }
 }
 
-async function updateExistingFlow(recipient, flowRate) {
+export async function updateExistingFlow(recipient, flowRate) {
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -82,7 +82,7 @@ async function updateExistingFlow(recipient, flowRate) {
   }
 }
 
-async function deleteFlow(recipient) {
+export async function deleteFlow(recipient) {
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -111,7 +111,7 @@ async function deleteFlow(recipient) {
   }
 }
 
-async function daiApprove(amt) {
+export async function daiApprove(amt) {
   //fDAI on goerli: you can find network addresses here: https://docs.superfluid.finance/superfluid/developers/networks
   //note that this abi is the one found here: https://goerli.etherscan.io/address/0x88271d333C72e51516B67f5567c728E702b3eeE8
   const DAI = new ethers.Contract(
@@ -135,7 +135,7 @@ async function daiApprove(amt) {
 }
 
 //where the Superfluid logic takes place
-async function daiUpgrade(amt) {
+export async function daiUpgrade(amt) {
   const DAIx = await sf.loadSuperToken("fDAIx");
 
   try {
@@ -157,7 +157,7 @@ async function daiUpgrade(amt) {
   }
 }
 
-async function daiDowngrade(amt) {
+export async function daiDowngrade(amt) {
   const DAIx = await sf.loadSuperToken(
     "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00"
   );

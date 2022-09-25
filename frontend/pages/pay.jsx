@@ -3,62 +3,128 @@ import Button from "../src/components/Button";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import banner from "../src/assets/banner.png";
+import {
+  useContract,
+  useSigner,
+  useProvider,
+  useAccount,
+  usePrepareSendTransaction,
+  useSendTransaction,
+  useWaitForTransaction,
+  useEnsAddress,
+} from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { UnstoppableDomain } from "../src/functionality/unstoppableDomains";
 
 export default function Pay(props) {
+  const [enteredAddress, setEnteredAddress] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [resolvedAddress, setResolvedAddress] = useState("");
+  const [paid, setPaid] = useState(false);
+
+  const { address } = useAccount();
+
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+  // const _amount = ethers.utils.parseEther(amount);
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: DAOFunds_Contract_Address,
+      value: amount ? ethers.utils.parseEther(amount) : undefined,
+    },
+  });
+
+  const { data, sendTransaction } = useSendTransaction(config);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("Transaction Completed");
+      setPaid(true);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    lensResolver(enteredAddress);
+    ensResolver(enteredAddress);
+    domainResolver(enteredAddress);
+  }, [enteredAddress]);
+
+  const pay = async () => {
+    try {
+      console.log("Paying ");
+      const tx = sendTransaction();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const lensResolver = (_address) => {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const ensResolver = (_address) => {
+    try {
+      const { data } = useEnsAddress(_address);
+      console.log(data);
+      setResolvedAddress(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const domainResolver = (_address) => {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={styles.page}>
-      <h1 className={styles.heading}>Welcome to Payment Page!!!</h1>
-      <div className={styles.pay}>
-        <div className={styles.banner}>
+      <h1 className={styles.heading}>Welcome!!!</h1>
+      <h2>Enter any of ENS , Lens and UnstoppableDomain handle below to pay</h2>
+      <div className={styles.single_pay}>
+        {/* <div className={styles.banner}>
           <Image className={styles.banner} src={banner} />
-        </div>
+        </div> */}
 
-        <div className={styles.pay_content}>
+        <ConnectButton />
+
+        <div className={styles.class1}>
+          <label>
+            <u>Send to:</u>
+          </label>
+          <input
+            onChange={(e) => {
+              setEnteredAddress(e.target.value);
+            }}
+            type={"text"}
+            placeholder="Enter Address"
+            className={styles.input}
+          />
+          <h3>{resolvedAddress}</h3>
           <h4>
-            <u>Request to:</u>
+            <u>Enter Amount:</u>
           </h4>
-          <h2>
-            Kushagra Sarathe
-            {props.name}
-          </h2>
-          <h4>
-            <u>Amount Requested:</u>
-          </h4>
-          <h3>
-            10 MATIC
-            {props.amount}
-          </h3>
-          <h4>
-            <u>Note:</u>
-          </h4>
-          <h3>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus
-            eaque veritatis
-            {props.note}
-          </h3>
-          <h4>
-            <u>Link Expires On:</u>
-          </h4>
-          <h3>
-            12/12/2025
-            {props.expiry}
-          </h3>
+          <input
+            onChange={(e) => {
+              setAmount(e.target.value);
+            }}
+            type={"number"}
+            placeholder="Enter Amount"
+            className={styles.input}
+          />
           <div className={styles.buttons}>
             <div className={styles.button}>
               <Button
-                title={"Pay Now"}
-                //   click={function here}
-              />
-            </div>
-            <div className={styles.button}>
-              <Button
-                title={"Pay Later"}
-                //   click={function here}
-              />
-            </div>
-            <div className={styles.button}>
-              <Button
-                title={"Pay in Stream"}
+                title={"Pay"}
                 //   click={function here}
               />
             </div>

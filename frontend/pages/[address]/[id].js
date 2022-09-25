@@ -11,8 +11,14 @@ import { MintBill } from "../../src/functionality/mintBill";
 import { StoreMetadata } from "../../src/functionality/StoreInvoices";
 import paymentNFT from "../../src/assets/0xfiPaymentNFT.png";
 import { fetchIPFS } from "../../src/functionality/fetchIPFS";
+import {
+  createNewFlow,
+  deleteFlow,
+  daiApprove,
+  daiUpgrade,
+} from "../../src/functionality/superfluid";
 
-export default function PayRequest(props) {
+export default async function PayRequest(props) {
   const [userAddress, setUserAddress] = useState("");
   const [details, setdetails] = useState({});
   const [requestId, setRequestId] = useState(0);
@@ -81,20 +87,6 @@ export default function PayRequest(props) {
     }
   };
 
-  const handlePayinStream = async () => {
-    try {
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handlePayLater = async () => {
-    try {
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const generateBill = async () => {
     try {
       /// create new description of the bill with the help of the data
@@ -105,6 +97,20 @@ export default function PayRequest(props) {
       /// mint the NFT with the help of NFT port
       const tx = await MintBill(ipfsURI, address);
       console.log(tx);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePayinStream = async () => {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePayLater = async () => {
+    try {
     } catch (err) {
       console.log(err);
     }

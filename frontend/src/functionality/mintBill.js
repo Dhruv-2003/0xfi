@@ -14,7 +14,7 @@ export const MintBill = async (ipfsURI, userAddress) => {
     },
     data: {
       chain: "polygon",
-      contract_address: "",
+      contract_address: "0x13884fb9f697F4d37B44Bfe0C5f2DF8D530cBD4e",
       metadata_uri: ipfsURI,
       mint_to_address: userAddress,
     },
