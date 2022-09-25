@@ -92,4 +92,10 @@ contract paymentProfile is Ownable {
     function suspectUser(address _user) public onlyOwner {
         users[_user].verified = false;
     }
+
+    /// @dev Function to receive Ether. msg.data must be empty
+    receive() external payable {}
+
+    /// @dev Fallback function is called when msg.data is not empty
+    fallback() external payable {}
 }

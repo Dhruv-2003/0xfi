@@ -102,7 +102,8 @@ export default function PayRequest(props) {
       /// generate the NFT metadata link and store on IPFS
       console.log(ipfsURI, address);
       /// mint the NFT with the help of NFT port
-      const tx = await MintBill(ipfsURI);
+      const tx = await MintBill(ipfsURI, address);
+      console.log(tx);
     } catch (err) {
       console.log(err);
     }
