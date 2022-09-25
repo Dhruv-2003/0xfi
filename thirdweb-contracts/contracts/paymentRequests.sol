@@ -85,7 +85,6 @@ contract paymentRequests is Ownable {
             "deadline should be atleast 10 minutes"
         );
 
-        totalRequests[msg.sender] = 0;
         uint256 _id = totalRequests[msg.sender];
 
         requests[msg.sender][_id] = PaymentRequest(

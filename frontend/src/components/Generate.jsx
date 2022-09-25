@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import styles from "../css/Component.module.css";
 import Button from "./Button";
 import copy_img from "../assets/copy.png";
+import { useContract, useSigner, useProvider, useAccount } from "wagmi";
+import { StoreRequests } from "../functionality/StoreRequests";
+import { Requests_Contract_address, Request_ABI } from "../constants";
+import { ethers } from "ethers";
+
 import Image from "next/image";
 
 export default function Generate() {
@@ -9,8 +14,58 @@ export default function Generate() {
   const [amount, setAmount] = useState(0);
   const [note, setNote] = useState("");
   const [expiry, setExpiry] = useState("");
+  const [detailsURI, setDetailsURI] = useState("");
 
   const [generatedLink, setGeneratedLink] = useState("");
+
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+  const Request_contract = useContract({
+    addressOrName: Requests_Contract_address,
+    contractInterface: Request_ABI,
+    signerOrProvider: signer || provider,
+  });
+
+  const handleCreate = async () => {
+    try {
+      // const deadline = Date.parse(expiry);
+      // const calculateAmount = ethers.utils.parseEther(amount);
+      // console.log(deadline, calculateAmount);
+      await storeDetails();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const storeDetails = async () => {
+    try {
+      console.log("Storing the info");
+      const cid = await StoreRequests(name, note, amount);
+      const URL = `https://ipfs.io/ipfs/${cid}`;
+      console.log(URL);
+      setDetailsURI(URL);
+      createRequest(URL);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createRequest = async (_detailsURL) => {
+    try {
+      const deadline = Date.parse(expiry);
+      const calculateAmount = ethers.utils.parseEther(amount);
+      const tx = await Request_contract.createRequest(
+        calculateAmount,
+        deadline,
+        _detailsURL
+      );
+      await tx.wait();
+      console.log(parseInt(tx.value._hex));
+      console.log("request created");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const inputHandler = (event) => {
     setGeneratedLink(event.target.value);
@@ -43,8 +98,8 @@ export default function Generate() {
         </h3>
         <input
           className={styles.input}
-          type="number"
-          placeholder="0.00"
+          type="text"
+          placeholder="0"
           required
           onChange={(e) => {
             setAmount(e.target.value);
@@ -67,7 +122,7 @@ export default function Generate() {
         <h3>Link Expiry</h3>
         <input
           className={styles.input}
-          type="date"
+          type="datetime-local"
           required
           onChange={(e) => {
             setExpiry(e.target.value);
@@ -95,7 +150,7 @@ export default function Generate() {
         </h4>
       </div> */}
       <div className={styles.button}>
-        <Button title={"Generate Link"} />
+        <Button click={handleCreate} title={"Generate Link"} />
       </div>
     </div>
   );

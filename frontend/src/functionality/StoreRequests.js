@@ -2,7 +2,7 @@
 // customized to store a json file created from the data we enter
 import { Web3Storage } from "web3.storage";
 
-import { WEB3STORAGE_TOKEN } from "../../../constants/constants";
+import { WEB3STORAGE_TOKEN } from "../constants";
 function getAccessToken() {
   return WEB3STORAGE_TOKEN;
 }
