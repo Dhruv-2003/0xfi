@@ -1,0 +1,9 @@
+type ListingEntity @entity {
+  id: ID!
+  amount: BigInt!
+  payeeAddress: Bytes!
+  payerAddress: Bytes!
+  requestId: BigInt!
+  deadline: BigInt!
+  detailsURI: String!
+}

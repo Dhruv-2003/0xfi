@@ -1,10 +1,68 @@
-import React from "react";
-import Button from "../src/components/Button";
-import styles from "../styles/Home.module.css";
+import Button from "../../src/components/Button";
+import styles from "../../styles/Home.module.css";
 import Image from "next/image";
-import banner from "../src/assets/banner.png";
+import banner from "../../src/assets/banner.png";
+import { useRouter } from "next/dist/client/router";
+import React, { useState, useEffect } from "react";
+import { useContract, useSigner, useProvider, useAccount } from "wagmi";
+import { Requests_Contract_address, Request_ABI } from "../../src/constants";
+import { ethers } from "ethers";
 
-export default function PayRequest() {
+export default function PayRequest(props) {
+  const [userAddress, setUserAddress] = useState("");
+  const [details, setdetails] = useState({});
+  const [requestId, setRequestId] = useState(0);
+
+  const router = useRouter();
+  const _address = router.query.address;
+  const _id = router.query.id;
+
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const Request_contract = useContract({
+    addressOrName: Requests_Contract_address,
+    contractInterface: Request_ABI,
+    signerOrProvider: signer || provider,
+  });
+
+  useEffect(() => {
+    setUserAddress(_address);
+    setRequestId(_id);
+    console.log(_id, _address);
+  }, [_id]);
+
+  const fetchRequest = async () => {
+    try {
+      console.log("fetching the request");
+      const response = await Request_contract.fetchRequest(
+        userAddress,
+        requestId
+      );
+      console.log(response);
+      setdetails(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePayFull = async () => {
+    try {
+      const amount = details.amount;
+      const tx = await Request_contract.PayinFull(userAddress, requestId, {
+        value: amount,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const generateBill = async () => {
+    try {
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className={styles.page}>
       <h1 className={styles.heading}>Welcome to Payment Page!!!</h1>
