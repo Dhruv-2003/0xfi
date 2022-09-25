@@ -1,27 +1,25 @@
-/// checked and approved
-// customized to store a json file created from the data we enter
-import { Web3Storage } from "web3.storage";
+import React from "react";
+import { useState } from "react";
+import { NFTStorage } from "nft.storage";
+import { NFT_STORAGE_API_KEY } from "../constants";
+/// used NFT.storage to prepare the metadata for the NFT
+export const StoreMetadata = async (image, Name, invoiceURI) => {
+  // const nftstorage_key = process.env.NFT_STORAGE_API_KEY;
 
-import { WEB3STORAGE_TOKEN } from "../../../constants/constants";
-function getAccessToken() {
-  return WEB3STORAGE_TOKEN;
-}
-
-function MakeStorageClient() {
-  return new Web3Storage({ token: getAccessToken() });
-}
-
-export const StoreInvoice = async (title, description, contentURL) => {
-  const obj = {
-    Name: title,
-    Description: description,
-    Content: contentURL,
+  console.log("Preparing Metadata ....");
+  const nft = {
+    image: image,
+    name: Name,
+    description: `The Bill file is stored here : ${audioCID} .Check more details on the website`,
+    external_url: invoiceURI,
   };
-  const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
-  const files = [new File([blob], "request.json")];
-  console.log("Uploading data to IPFS with web3.storage....");
-  const client = MakeStorageClient();
-  const cid = await client.put(files);
-  console.log("Stored files with cid:", cid);
-  return cid;
+  console.log("Uploading Metadata to IPFS ....");
+  const client = new NFTStorage({ token: NFT_STORAGE_API_KEY });
+  const metadata = await client.store(nft);
+  console.log(metadata);
+  console.log("NFT data stored successfully 🚀🚀");
+  console.log("Metadata URI: ", metadata.url);
+  // SetMetadataURI(metadata.url);
+
+  return metadata;
 };

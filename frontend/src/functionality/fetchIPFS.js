@@ -1,8 +1,8 @@
-const fetchIPFS = async (metadataURI) => {
+export const fetchIPFS = async (metadataURI) => {
   try {
     console.log("Fetching from IPFS ...");
-    const URL = `https://ipfs.io/ipfs/${metadataURI}/research.json`;
-    const response = await fetch(URL);
+    // const URL = `https://ipfs.io/ipfs/${metadataURI}/research.json`;
+    const response = await fetch(metadataURI);
     const data = await response.json();
     return data;
   } catch (error) {
