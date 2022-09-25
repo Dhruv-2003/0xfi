@@ -10,7 +10,8 @@ import {
   Funds_Contract_address,
 } from "../src/constants";
 import { useContract, useSigner, useProvider, useAccount } from "wagmi";
-export default function dashboard(props) {
+
+export default function Dashboard(props) {
   const [name, setName] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
   const [verifyStart, setVerifyStart] = useState(false);

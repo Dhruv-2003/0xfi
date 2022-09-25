@@ -3,16 +3,15 @@ import { Framework } from "@superfluid-finance/sdk-core";
 import { ethers } from "ethers";
 import { useSigner, useProvider } from "wagmi";
 
-const provider = useProvider();
-const { data: signer } = useSigner();
-
-const sf = await Framework.create({
-  chainId: 80001,
-  provider: provider,
-});
-
 /// create flow component
-export async function createNewFlow(recipient, flowRate) {
+export async function CreateNewFlow(recipient, flowRate) {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const sf = await Framework.create({
+    chainId: 80001,
+    provider: provider,
+  });
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -47,7 +46,14 @@ export async function createNewFlow(recipient, flowRate) {
   }
 }
 
-export async function updateExistingFlow(recipient, flowRate) {
+export async function UpdateExistingFlow(recipient, flowRate) {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const sf = await Framework.create({
+    chainId: 80001,
+    provider: provider,
+  });
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -82,7 +88,14 @@ export async function updateExistingFlow(recipient, flowRate) {
   }
 }
 
-export async function deleteFlow(recipient) {
+export async function DeleteFlow(recipient) {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const sf = await Framework.create({
+    chainId: 80001,
+    provider: provider,
+  });
   const DAIxContract = await sf.loadSuperToken("fDAIx");
   const DAIx = DAIxContract.address;
 
@@ -111,7 +124,14 @@ export async function deleteFlow(recipient) {
   }
 }
 
-export async function daiApprove(amt) {
+export async function DaiApprove(amt) {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const sf = await Framework.create({
+    chainId: 80001,
+    provider: provider,
+  });
   //fDAI on goerli: you can find network addresses here: https://docs.superfluid.finance/superfluid/developers/networks
   //note that this abi is the one found here: https://goerli.etherscan.io/address/0x88271d333C72e51516B67f5567c728E702b3eeE8
   const DAI = new ethers.Contract(
@@ -135,7 +155,14 @@ export async function daiApprove(amt) {
 }
 
 //where the Superfluid logic takes place
-export async function daiUpgrade(amt) {
+export async function DaiUpgrade(amt) {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const sf = await Framework.create({
+    chainId: 80001,
+    provider: provider,
+  });
   const DAIx = await sf.loadSuperToken("fDAIx");
 
   try {
@@ -157,7 +184,14 @@ export async function daiUpgrade(amt) {
   }
 }
 
-export async function daiDowngrade(amt) {
+export async function DaiDowngrade(amt) {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const sf = await Framework.create({
+    chainId: 80001,
+    provider: provider,
+  });
   const DAIx = await sf.loadSuperToken(
     "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00"
   );

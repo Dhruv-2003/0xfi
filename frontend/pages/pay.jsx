@@ -59,15 +59,15 @@ export default function Pay(props) {
   //   domainResolver(enteredAddress);
   // }, [enteredAddress]);
 
-  const ensResolver = (_address) => {
-    try {
-      const { data } = useEnsAddress(_address);
-      console.log(data);
-      setResolvedAddress(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const EnsResolver = (_address) => {
+  //   try {
+  //     const { data } = useEnsAddress(_address);
+  //     console.log(data);
+  //     setResolvedAddress(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className={styles.page}>

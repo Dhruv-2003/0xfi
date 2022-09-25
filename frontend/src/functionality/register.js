@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useContract, userSigner, useProvider, useAccount } from "wagmi";
 import { Profile_Contract_address, Profile_ABI } from "../constants";
 
-export default function register() {
+export default function Register() {
   const [name, setName] = useState("");
   const [recieveAddress, setRecieveAddress] = useState("");
 

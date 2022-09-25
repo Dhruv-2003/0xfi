@@ -10,7 +10,7 @@ import {
 import { ethers } from "ethers";
 
 /// personalized page
-export default function payLink() {
+export default function PayLink() {
   const [amount, setAmount] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [details, setdetails] = useState({});

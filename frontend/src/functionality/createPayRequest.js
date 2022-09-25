@@ -4,7 +4,7 @@ import { StoreRequests } from "./StoreRequests";
 import { Requests_Contract_address, Request_ABI } from "../constants";
 import { ethers } from "ethers";
 
-export default function createPayRequest() {
+export default function CreatePayRequest() {
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
   const [amount, setAmount] = useState("");
