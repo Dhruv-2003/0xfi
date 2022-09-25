@@ -15,9 +15,10 @@ export default function Generate() {
   const [note, setNote] = useState("");
   const [expiry, setExpiry] = useState("");
   const [detailsURI, setDetailsURI] = useState("");
-
+  const [requestId, setRequestId] = useState(0);
   const [generatedLink, setGeneratedLink] = useState("");
 
+  const { address, isConnected } = useAccount();
   const provider = useProvider();
   const { data: signer } = useSigner();
   const Request_contract = useContract({
@@ -60,8 +61,12 @@ export default function Generate() {
         _detailsURL
       );
       await tx.wait();
-      console.log(parseInt(tx.value._hex));
+      const id = parseInt(tx.value._hex);
+      setRequestId(id);
+      // console.log(parseInt(tx.value._hex));
       console.log("request created");
+
+      setGeneratedLink(`https://0xfi.vercel.app/${address}/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -151,6 +156,9 @@ export default function Generate() {
       </div> */}
       <div className={styles.button}>
         <Button click={handleCreate} title={"Generate Link"} />
+      </div>
+      <div>
+        <a>The generated link is</a>
       </div>
     </div>
   );
