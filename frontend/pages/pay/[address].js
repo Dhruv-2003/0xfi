@@ -1,64 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../src/components/Button";
 import styles from "../../styles/Home.module.css";
 import Image from "next/image";
-import banner from "../../src/assets/banner.png";
+import banner from "../../src/assets/eth.jpg";
 
 export default function Pay(props) {
+
+  const [name, setName] = useState('')
+  const [amount, setAmount] = useState()
+
   return (
     <div className={styles.page}>
-      <h1 className={styles.heading}>Welcome to Payment Page!!!</h1>
-      <div className={styles.pay}>
+      <h1 className={styles.heading}>Welcome!!!</h1>
+      <div className={styles.single_pay}>
         <div className={styles.banner}>
           <Image className={styles.banner} src={banner} />
         </div>
 
-        <div className={styles.pay_content}>
+        <div className={styles.class1}>
+          <label>
+            <u>Send to:</u>
+
+          </label>
+          <input onChange={e => {
+            setName(e.target.value)
+          }} type={'text'} placeholder='Enter Name' className={styles.input} />
           <h4>
-            <u>Request to:</u>
+            <u>Enter Amount:</u>
           </h4>
-          <h2>
-            Kushagra Sarathe
-            {props.name}
-          </h2>
-          <h4>
-            <u>Amount Requested:</u>
-          </h4>
-          <h3>
-            10 MATIC
-            {props.amount}
-          </h3>
-          <h4>
-            <u>Note:</u>
-          </h4>
-          <h3>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus
-            eaque veritatis
-            {props.note}
-          </h3>
-          <h4>
-            <u>Link Expires On:</u>
-          </h4>
-          <h3>
-            12/12/2025
-            {props.expiry}
-          </h3>
-          <div className={styles.buttons}>
+          <input onChange={e => {
+            setAmount(e.target.value)
+          }} type={'number'} placeholder='Enter Amount' className={styles.input} />
+            <div className={styles.buttons}>
             <div className={styles.button}>
               <Button
-                title={"Pay Now"}
-                //   click={function here}
-              />
-            </div>
-            <div className={styles.button}>
-              <Button
-                title={"Pay Later"}
-                //   click={function here}
-              />
-            </div>
-            <div className={styles.button}>
-              <Button
-                title={"Pay in Stream"}
+                title={"Pay"}
                 //   click={function here}
               />
             </div>
