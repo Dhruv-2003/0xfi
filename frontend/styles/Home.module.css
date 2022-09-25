@@ -105,6 +105,38 @@
   max-width: 750px;
 }
 
+.dashboard {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.dashboard_section {
+  /* width: 30%; */
+}
+
+.balance {
+    /* margin: 20[x] auto; */
+    /* width: 90%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 3rem 2rem;
+    border: 1px solid #adbce3;
+    border-radius: 8px;
+    background-color: #dee6f7;
+    background-color: transparent;
+    color: #dbeaf7;
+    box-shadow: #7a90b7 0px 1px 3px 0px, #b3cbe5 0px 1px 2px 0px;
+}
+
+
+
 @media screen and (max-width: 768px) {
   .button {
     width: 100%;
@@ -117,4 +149,9 @@
   .pay_content {
     padding: 0.5rem 0;
   }
+
+  .dashboard_section {
+    width: 100%;
+  }
+
 }
