@@ -18,13 +18,14 @@ import { fetchIPFS } from "../../src/functionality/fetchIPFS";
 //   daiUpgrade,
 // } from "../../src/functionality/superfluid";
 
-export default async function PayRequest(props) {
+export default function PayRequest() {
   const [userAddress, setUserAddress] = useState("");
   const [details, setdetails] = useState({});
   const [requestId, setRequestId] = useState(0);
   const [isPaid, setIsPaid] = useState(false);
   const [valueInWei, setValueInWei] = useState(0);
   const [invoiceURI, setInvoiceURI] = useState("");
+
   const router = useRouter();
   const _address = router.query.address;
   const _id = router.query.id;
@@ -59,6 +60,7 @@ export default async function PayRequest(props) {
       // console.log(parseInt(response[1]))
       const date = new Date(parseInt(response[1])).toString();
       setValueInWei(parseInt(response[0]));
+      console.log(data, date);
       const request = {
         Name: data.Reciever,
         Amount: data.Amount,
@@ -163,7 +165,7 @@ export default async function PayRequest(props) {
               <div className={styles.button}>
                 <Button
                   title={"Generate Bill and Mint NFT"}
-                  //   click={function here}
+                  click={generateBill}
                 />
               </div>
             </div>
