@@ -26,6 +26,12 @@
   }
    */
 
+   .brand_title {
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+   }
+
 .navbar {
   padding: 1rem 2rem;
   display: flex;

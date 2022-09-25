@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import logo from "../assets/logo.png";
+import logo1 from "../assets/brand.svg";
 import image from "../assets/img-bg.png";
 
 export default function Layout({ children }) {
@@ -16,9 +17,10 @@ export default function Layout({ children }) {
     <>
       <nav className={styles.navbar}>
         <Link href="/">
-          <span className={styles.brand}>
-            <Image className={styles.logo} src={logo} />
-          </span>
+          <h1 className={styles.brand_title}>0xFi</h1>
+          {/* <span className={styles.brand}> */}
+          {/* <Image className={styles.logo} src={logo1} /> */}
+          {/* </span> */}
         </Link>
 
         <ul
