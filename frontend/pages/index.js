@@ -31,24 +31,24 @@ export default function Home() {
         </h1>
         <div className={styles.features}>
           <div>
-              <p>
-                Create a payment link to request a pay for specific amount and deadline.
-              </p>
+            <p>
+              Create a payment link to request a pay for specific amount and deadline.
+            </p>
           </div>
           <div>
-              <p>Get a NFT minted right after transcation as an invoice              </p>
+            <p>Get a NFT minted right after transcation as an invoice              </p>
           </div>
           <div>
-              <p>
-Pay in Stream with SuperFluid               </p>
+            <p>
+              Pay in Stream with SuperFluid               </p>
           </div>
           <div>
-              <p>
-Manage all your payments from dashboard              </p>
+            <p>
+              Manage all your payments from dashboard              </p>
           </div>
           <div>
-              <p>
-Invest directly from the platform into different investment methods and earn interest</p>
+            <p>
+              Invest directly from the platform into different investment methods and earn interest</p>
           </div>
         </div>
       </main>
